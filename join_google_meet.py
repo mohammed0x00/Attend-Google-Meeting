@@ -12,7 +12,7 @@ import time
 # Retrieve Google credentials from environment variables
 email = "mmansour.mm5@gmail.com"
 password = os.getenv("GOOGLE_PASSWORD")
-meet_url = "https://meet.google.com/your-meet-code"
+meet_url = "https://meet.google.com/vrt-aquf-pho"
 
 # Set up Chrome options for headless mode
 chrome_options = Options()
