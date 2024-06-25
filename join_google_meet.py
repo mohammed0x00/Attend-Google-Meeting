@@ -12,7 +12,7 @@ import time
 # Retrieve Google credentials from environment variables
 email = os.getenv("GOOGLE_EMAIL")
 password = os.getenv("GOOGLE_PASSWORD")
-meet_url = "https://meet.google.com/vrt-aquf-pho"
+meet_url = "https://meet.google.com/your-meet-code"
 
 # Set up Chrome options for headless mode
 chrome_options = Options()
@@ -29,24 +29,29 @@ def google_login(email, password):
     driver.get("https://accounts.google.com/signin")
 
     # Enter email
-    email_field = WebDriverWait(driver, 10).until(
+    email_field = WebDriverWait(driver, 20).until(
         EC.presence_of_element_located((By.ID, "identifierId"))
     )
     email_field.send_keys(email)
     email_field.send_keys(Keys.ENTER)
 
     # Wait for the transition to the password field
-    password_field = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.NAME, "password"))
-    )
-    password_field.send_keys(password)
-    password_field.send_keys(Keys.ENTER)
+    try:
+        password_field = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.NAME, "password"))
+        )
+        password_field.send_keys(password)
+        password_field.send_keys(Keys.ENTER)
+    except:
+        # Capture screenshot for debugging
+        driver.save_screenshot('screenshot.png')
+        raise
 
 def join_google_meet(meet_url):
     driver.get(meet_url)
     
     # Wait for the "Join now" button to become clickable
-    join_button = WebDriverWait(driver, 10).until(
+    join_button = WebDriverWait(driver, 20).until(
         EC.element_to_be_clickable((By.XPATH, "//span[text()='Join now']"))
     )
     join_button.click()
