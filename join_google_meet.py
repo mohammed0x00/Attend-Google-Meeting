@@ -10,7 +10,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 import time
 
 # Retrieve Google credentials from environment variables
-email = os.getenv("GOOGLE_EMAIL")
+email = "mmansour.mm5@gmail.com"
 password = os.getenv("GOOGLE_PASSWORD")
 meet_url = "https://meet.google.com/your-meet-code"
 
