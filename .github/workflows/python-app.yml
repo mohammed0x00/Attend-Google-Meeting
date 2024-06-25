@@ -27,7 +27,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install tools
-        run: pip install selenium webdriver-manager
+        run: sudo apt-get install chrome;pip install selenium webdriver-manager
 
       # Runs a set of commands using the runners shell
       - name: Run script
