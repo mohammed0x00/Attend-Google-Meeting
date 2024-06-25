@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
@@ -27,23 +29,26 @@ def google_login(email, password):
     driver.get("https://accounts.google.com/signin")
 
     # Enter email
-    email_field = driver.find_element(By.ID, "identifierId")
+    email_field = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.ID, "identifierId"))
+    )
     email_field.send_keys(email)
     email_field.send_keys(Keys.ENTER)
-    time.sleep(2)
 
-    # Enter password
-    password_field = driver.find_element(By.NAME, "password")
+    # Wait for the transition to the password field
+    password_field = WebDriverWait(driver, 10).until(
+        EC.presence_of_element_located((By.NAME, "password"))
+    )
     password_field.send_keys(password)
     password_field.send_keys(Keys.ENTER)
-    time.sleep(5)  # Adjust sleep time as necessary
 
 def join_google_meet(meet_url):
     driver.get(meet_url)
-    time.sleep(5)  # Adjust sleep time as necessary
-
-    # Join the meeting (you may need to handle additional buttons depending on the state of your browser/microphone permissions)
-    join_button = driver.find_element(By.XPATH, "//span[text()='Join now']")
+    
+    # Wait for the "Join now" button to become clickable
+    join_button = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, "//span[text()='Join now']"))
+    )
     join_button.click()
 
 # Log in to Google
