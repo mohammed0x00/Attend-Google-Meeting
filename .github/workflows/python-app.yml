@@ -44,3 +44,10 @@ jobs:
         sudo Xvfb :99 -ac &
         export DISPLAY=:99
         python join_google_meet.py
+
+    - name: Upload screenshot if exists
+      if: always()  # This ensures the step runs even if previous steps fail
+      uses: actions/upload-artifact@v3
+      with:
+        name: screenshot
+        path: screenshot.png
